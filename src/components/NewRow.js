@@ -3,13 +3,10 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 
-class NewRow extends Component {
-  constructor(props) {
-    super(props);
 
-    this.headers = this.getHeaders();
-    this.lastId = this.getLastId();
-  }
+const style = {margin:"10px"};
+
+class NewRow extends Component {
 
   getHeaders() {
     let headers = [];
@@ -26,25 +23,15 @@ class NewRow extends Component {
 
   drowInputs() {
     let inputs = [];
-    this.headers.forEach(element => {
-      inputs.push(<div><FormControl>
+    this.getHeaders().forEach((element, index) => {
+      inputs.push(<div key={index}><FormControl>
         <InputLabel htmlFor={element}>{element}</InputLabel>
         <Input
           id={element}
-          key={element}
           name={element}
         /></FormControl></div>)
     });
     return inputs;
-  }
-
-  drowSubmitButton() {
-    return <Button
-      color="primary">
-      <div onClick={this.createNewRow.bind(this)}>
-        Submit
-    </div>
-    </Button>;
   }
 
   createNewRow(e) {
@@ -52,13 +39,9 @@ class NewRow extends Component {
     newRowObject = this.addIdToRow(newRowObject);
     let notEmptyValues = this.validateForm(newRowObject);
     if (notEmptyValues) {
-      // this.resetFormInputsValue();
-      // this.showSuccessMessage();
+      this.resetFormInputsValue();
+      this.showSuccessMessage();
       this.addRowData(newRowObject);
-      // return newRowObject;
-    } else {
-      console.log(false);
-      // return false;
     }
   }
 
@@ -79,13 +62,13 @@ class NewRow extends Component {
   getLastId() {
     let lastId = 0;
     this.props.data.forEach(dataItem => {
-      (dataItem.id > lastId) ? lastId = dataItem.id : "";
+      (dataItem.id > lastId) ? lastId = dataItem.id : lastId = 0;
     });
     return lastId;
   }
 
   addIdToRow(newRow) {
-    newRow[this.props.id] = (this.lastId + 1);
+    newRow[this.props.id] = (this.getLastId() + 1);
     return newRow;
   }
 
@@ -96,26 +79,35 @@ class NewRow extends Component {
     Object.keys(newRowObject).forEach(function (key) {
       if (!(newRowObject[key])) {
         isNotEmptyNames = false;
-        console.log(document.getElementById(key));
         this.showErrorMessage(key);
       }
-    });
+    }, this);
     return isNotEmptyNames;
   }
 
   clearMessage() {
-    document.getElementById("message").text = "";
+    document.getElementById("message").innerHTML = "";
     let inputs = document.getElementsByTagName('input');
     let inputsList = Array.prototype.slice.call(inputs);
     inputsList.forEach(element => {
-      document.getElementById(element.id).style.borderStyle = 'none';
+      document.getElementById(element.id).style.background = 'none';
     });
   }
 
-  // 
+  resetFormInputsValue() {
+    let inputs = document.getElementsByTagName('input');
+    let inputsList = Array.prototype.slice.call(inputs);
+    inputsList.forEach(element => {
+      document.getElementById(element.id).value = '';
+    });
+  }
+
   showErrorMessage(key) {
-    console.log(1);
-    // document.getElementById(key).style.border = "1px solid red";
+    document.getElementById(key).style.background = "rgba(204, 0, 0, 0.2)";
+  }
+
+  showSuccessMessage() {
+    document.getElementById("message").innerHTML = "Row is added";
   }
 
 
@@ -123,7 +115,11 @@ class NewRow extends Component {
     return (
       <div>
         {this.drowInputs()}
-        {this.drowSubmitButton()}
+        <Button color="primary" style={style}>
+          <div onClick={this.createNewRow.bind(this)}>
+            Submit
+          </div>
+        </Button>
         <div id="message"></div>
       </div>
     );

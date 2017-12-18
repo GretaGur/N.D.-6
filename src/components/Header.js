@@ -1,6 +1,8 @@
 import React from "react";
 
+const style = {margin:"10px"};
+
 const Header = (props) => {
-  return <div>Welcome: {props.userName}</div>
+  return <div style={style}>Welcome: {props.userName}</div>
 };
 export default Header

@@ -7,7 +7,6 @@ class DataTable extends Component {
     super(props);
 
     this.headers = this.getHeaders();
-    // this.header = this.drawHeaders();
   }
 
   getHeaders() {
@@ -25,16 +24,17 @@ class DataTable extends Component {
 
   drawHeaders() {
     let header = [];
-    this.headers.forEach(element => {
-      header.push(<TableCell key={element}>{element}</TableCell>)
+    this.headers.forEach((element, index) => {
+      header.push(<TableCell key={index}>{element}</TableCell>)
     });
     return header;
   }
+  
   drawRow(dataItem) {
     let cell = [];
 
-      this.headers.forEach(key => {
-        cell.push(<TableCell key={dataItem[key] || ""}>{dataItem[key] || ""}</TableCell>)
+      this.headers.forEach((key, index) => {
+        cell.push(<TableCell key={index}>{dataItem[key] || ""}</TableCell>)
       })
 
     return cell;
@@ -49,8 +49,6 @@ class DataTable extends Component {
   }
 
   render() {
-    // console.log(this.props.data);
-    // console.log(this.headers);
     return (
       <div>
         <Paper>

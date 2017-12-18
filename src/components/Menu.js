@@ -1,23 +1,24 @@
 import React from 'react';
 import Button from 'material-ui/Button';
+import { withRouter } from 'react-router-dom'
 
 function logout() {
   localStorage.removeItem('userName');
 }
+const style = {margin:"10px"};
 
-const Menu = () => {
-
+const Menu = ({history}) => {
   return <nav>
-    <Button href="/homepage" color="primary">
+    <Button style={style} onClick={() => history.push('/homepage')} color="primary">
       Home
     </Button>
-    <Button href="/newrowpage" color="primary">
+    <Button style={style} onClick={() => history.push('/newrowpage')} color="primary">
       New Row
     </Button>
-    <Button onClick={logout} href="/" color="primary">
+    <Button style={style} onClick={logout} href="/" color="primary">
       Logout
     </Button>
   </nav>
 };
 
-export default Menu;
+export default withRouter(Menu);

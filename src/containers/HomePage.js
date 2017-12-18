@@ -16,9 +16,7 @@ import Table from "../components/Table";
 
 const HomePage = (props) => {
     return (
-      <div>
-        <Table data={props.data}/>
-      </div>
+      <Table data={props.data}/>
     );
 };
 

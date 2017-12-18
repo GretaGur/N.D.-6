@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
+import Button from 'material-ui/Button';
+
 
 class Login extends Component {
   state = { userName: "", password: "" };
@@ -24,17 +28,21 @@ class Login extends Component {
       <div>
         <form>
           <div>
-            <label>
-              <b>Username</b>
-            </label>
-            <input onChange={this.setUsername.bind(this)} />
+            <FormControl>
+              <InputLabel htmlFor={"username"}>
+                <b>Username</b>
+              </InputLabel>
+              <Input name={"username"} onChange={this.setUsername.bind(this)} />
+            </FormControl>
             <br />
-            <label>
-              <b>Password</b>
-            </label>
-            <input type="password" onChange={this.setPassword.bind(this)} />
+            <FormControl>
+              <InputLabel htmlFor={"password"}>
+                <b>Password</b>
+              </InputLabel>
+              <Input name={"password"} onChange={this.setPassword.bind(this)} />
+            </FormControl>
             <br />
-            <div onClick={this.onSubmit.bind(this)}> <Link to={"/homepage"} >Login</Link></div>
+            <Button onClick={this.onSubmit.bind(this)}> <Link to={"/homepage"} >Login</Link></Button>
           </div>
         </form>
       </div>

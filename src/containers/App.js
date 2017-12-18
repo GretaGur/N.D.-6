@@ -17,7 +17,7 @@ class App extends Component {
     };
     this.getUsername = this.getUsername.bind(this);
     this.addRowToData = this.addRowToData.bind(this);
-    console.log(this.state.data);
+    //console.log(this.state.data);
   }
 
   getUsername(name) {
@@ -25,12 +25,7 @@ class App extends Component {
   }
   addRowToData(newRowObject) {
     // this.setState({ data: [...this.state.data, newRowObject] },  this.updatingItem);
-    this.setState({ data: [...this.state.data, newRowObject] }, () => {
-      this.forceUpdate();
-      console.log(this.state.data);
-    });
-    
-
+    this.setState({ data: [...this.state.data, newRowObject] });
     // let arrayvar = this.state.data.slice();
     // arrayvar.push(newRowObject);
     // console.log(arrayvar);
@@ -46,13 +41,14 @@ class App extends Component {
   }
 
   render() {
+    // console.log("data:", this);
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/" render={() => (<Login getUsername={this.getUsername} />)} />
           <DefaultLayout userName={this.state.userName}>
             <Route exact path="/homepage" render={() => (<HomePage data={this.state.data} />)} />
-            <Route exact path="/newrowpage" render={() => (<div>{this.state.data.length}<NewRowPage data={this.state.data} dataTableRowId={this.state.dataTableRowId} addRowToData={this.addRowToData} /></div>)} />
+            <Route exact path="/newrowpage" render={() => (<div>{/*this.state.data.length*/}<NewRowPage data={this.state.data} dataTableRowId={this.state.dataTableRowId} addRowToData={this.addRowToData} /></div>)} />
           </DefaultLayout>
         </Switch>
       </BrowserRouter>
