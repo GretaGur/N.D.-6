@@ -20,9 +20,32 @@ class Login extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    this.props.getUsername(this.state.userName);
-    this.setUsernameToLocalStorage();
+    if (this.formValid()) {
+      this.props.getUsername(this.state.userName);
+      this.setUsernameToLocalStorage();
+      // history.push('/home');
+    }
   }
+  formValid() {
+    let valid = true;
+    let username = document.getElementById('username');
+    let password = document.getElementById('password');
+    if (username.value) {
+      username.style.background = "none";
+    } else {
+      username.style.background = "rgba(204, 0, 0, 0.2)";
+      valid = false;
+    }
+    if (password.value) {
+      password.style.background = "none";
+    } else {
+      password.style.background = "rgba(204, 0, 0, 0.2)";
+      valid = false;
+    }
+    return valid;
+  }
+
+
   render() {
     return (
       <div>
@@ -32,17 +55,17 @@ class Login extends Component {
               <InputLabel htmlFor={"username"}>
                 <b>Username</b>
               </InputLabel>
-              <Input name={"username"} onChange={this.setUsername.bind(this)} />
+              <Input id={"username"} name={"username"} onChange={this.setUsername.bind(this)} />
             </FormControl>
             <br />
             <FormControl>
               <InputLabel htmlFor={"password"}>
                 <b>Password</b>
               </InputLabel>
-              <Input name={"password"} onChange={this.setPassword.bind(this)} />
+              <Input id={"password"} name={"password"} onChange={this.setPassword.bind(this)} />
             </FormControl>
             <br />
-            <Button onClick={this.onSubmit.bind(this)}> <Link to={"/homepage"} >Login</Link></Button>
+            <Button onClick={this.onSubmit.bind(this)}><Link to={"/homepage"} >Login</Link></Button>
           </div>
         </form>
       </div>
