@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
+import { withRouter } from 'react-router-dom';
 
 
 class Login extends Component {
@@ -23,7 +24,7 @@ class Login extends Component {
     if (this.formValid()) {
       this.props.getUsername(this.state.userName);
       this.setUsernameToLocalStorage();
-      // history.push('/home');
+      this.props.history.push('/homepage');
     }
   }
   formValid() {
@@ -65,7 +66,7 @@ class Login extends Component {
               <Input id={"password"} name={"password"} onChange={this.setPassword.bind(this)} />
             </FormControl>
             <br />
-            <Button onClick={this.onSubmit.bind(this)}><Link to={"/homepage"} >Login</Link></Button>
+            <Button onClick={this.onSubmit.bind(this)}>Login</Button>
           </div>
         </form>
       </div>
@@ -73,4 +74,5 @@ class Login extends Component {
   }
 }
 
-export default Login;
+// export default Login;
+export default withRouter(Login);
